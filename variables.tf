@@ -23,6 +23,11 @@ variable "system_node_count" {
   description = "Number of system nodes"
 }
 
+variable "node_pool_vm_size" {
+  type        = string
+  description = "VM size of the node pool"
+}
+
 variable "acr_name" {
   type        = string
   description = "Name of the ACR"

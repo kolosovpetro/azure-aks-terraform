@@ -15,7 +15,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   default_node_pool {
     name                = "systempool"
     node_count          = var.system_node_count
-    vm_size             = "Standard_DS2_v2"
+    vm_size             = var.node_pool_vm_size
     type                = "VirtualMachineScaleSets"
     enable_auto_scaling = false
   }
@@ -28,6 +28,18 @@ resource "azurerm_kubernetes_cluster" "aks" {
     load_balancer_sku = "standard"
     network_plugin    = "kubenet" # CNI
   }
+}
+
+resource "azurerm_kubernetes_cluster_node_pool" "spot_node_pool" {
+  name                  = "spotpool"
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
+  vm_size               = "Standard_B2s"
+  node_count            = 1
+  enable_auto_scaling   = true
+  min_count             = 1
+  max_count             = 3
+
+  priority = "Spot"
 }
 
 resource "azurerm_container_registry" "acr" {
