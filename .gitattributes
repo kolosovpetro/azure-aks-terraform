@@ -3,3 +3,4 @@
 *.cshtml linguist-detectable=false
 *.htm linguist-detectable=false
 *.razor linguist-detectable=false
+*.ps1 linguist-detectable=false
